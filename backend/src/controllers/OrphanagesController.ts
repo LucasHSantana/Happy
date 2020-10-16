@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
 import Orphanage from '../models/Orphanage';
-import { json, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import orphanageView from '../views/OrphanagesView';
 import * as Yup from 'yup';
 
@@ -10,7 +10,7 @@ export default {
 
         const orphanages = await orphanagesRepository.find({
             relations: ['images']
-        });
+        });        
 
         return response.status(200).json(orphanageView.renderMany(orphanages));
     },
