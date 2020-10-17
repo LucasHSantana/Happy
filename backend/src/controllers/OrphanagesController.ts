@@ -28,7 +28,7 @@ export default {
     },
 
 
-    async create(request: Request, response: Response){
+    async create(request: Request, response: Response){        
         const {
             name,
             latitude,
@@ -43,7 +43,7 @@ export default {
         const images = requestImages.map(image => {
             return { path: image.filename}
         })
-    
+            
         const orphanagesRepository = getRepository(Orphanage);
 
         const data = {
@@ -74,12 +74,12 @@ export default {
 
         await schema.validate(data, {
             abortEarly: false,
-        })
+        });
         
         const orphanage = orphanagesRepository.create(data);
     
         await orphanagesRepository.save(orphanage);
     
-        return response.status(201).json(orphanage);
+        return response.status(201).json(orphanage);        
     }
 };
