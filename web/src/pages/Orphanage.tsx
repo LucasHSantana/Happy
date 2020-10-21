@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaWhatsapp } from "react-icons/fa";
+// import { FaWhatsapp } from "react-icons/fa";
 import { FiClock, FiInfo } from "react-icons/fi";
 import { Map, Marker, TileLayer } from "react-leaflet";
 import mapIcon from '../utils/mapIcon';
@@ -34,7 +34,7 @@ export default function Orphanage() {
 
   useEffect(() => {
       api.get(`orphanages/${params.id}`).then(response => {
-          setOrphanage(response.data);
+          setOrphanage(response.data);          
       });
   }, [params.id]);
 
@@ -42,19 +42,24 @@ export default function Orphanage() {
     return <p>Carregando ... </p>
   }
 
-  return (
+  return (    
     <div id="page-orphanage">
       <SideBar />
       <main>
-        <div className="orphanage-details">
-          <img src={orphanage.images[activeImageIndex].url} alt={orphanage.name} />
+        <div className="orphanage-details">     
+          { orphanage.images.length > 0 && //Evita erro caso não seja enviado nenhuma imagem
+            <img             
+              src={orphanage.images[activeImageIndex].url}
+              alt={orphanage.name} 
+            />
+          }
 
           <div className="images">
             { orphanage.images.map((image, index) => {
               return (
                 <button 
                   key={image.id} 
-                  className={ activeImageIndex == index ? 'active' : ''} 
+                  className={ activeImageIndex === index ? 'active' : ''} 
                   type="button"
                   onClick={() => {
                     setActiveImageIndex(index);
